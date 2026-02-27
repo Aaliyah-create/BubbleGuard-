@@ -1,0 +1,438 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <title>BubbleGuard | NHG Health</title>
+  <meta charset="utf-8">
+  <meta name="description" content="BubbleGuard customiser">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link type="text/css" href="./styles.css" rel="stylesheet"/>
+
+  <style>
+    :root{
+      --bg:#f6f8fb;
+      --card:#fff;
+      --text:#0f172a;
+      --muted:#64748b;
+      --border:#e5e7eb;
+      --accent:#0ea5e9;
+      --shadow:0 8px 24px rgba(15,23,42,.08);
+      --radius:14px;
+    }
+
+    *{ box-sizing:border-box; }
+
+    body{
+      margin:0;
+      font-family: Arial, Helvetica, sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      height:100vh;
+      overflow:hidden; /* IMPORTANT: page won't scroll */
+    }
+
+    /* Header */
+    .topbar{
+      position: sticky;
+      top:0;
+      z-index:10;
+      background:#fff;
+      border-bottom:1px solid var(--border);
+      height:72px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:0 24px;
+    }
+    .topbar img{ height:34px; display:block; }
+
+    /* App area below header */
+    .app{
+      height: calc(100vh - 72px); /* header height */
+      overflow: hidden;
+    }
+
+    /* Layout */
+    .page{
+      display:grid;
+      grid-template-columns: minmax(520px,1fr) 460px;
+      gap:22px;
+      padding:22px 24px 40px;
+      max-width:1280px;
+      margin:0 auto;
+      height:100%;
+      overflow:hidden;
+    }
+
+    /* Viewer card */
+    .viewer-wrap{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+
+      position: sticky; /* keep viewer visible */
+      top: 0;
+      height: 100%;
+      align-self: start;
+    }
+    .viewer-head{
+      padding:14px 16px;
+      border-bottom:1px solid var(--border);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      height:56px;
+    }
+    .viewer-title{
+      font-size:13px;
+      font-weight:800;
+      letter-spacing:.1em;
+      text-transform:uppercase;
+      color:var(--muted);
+    }
+    .badge{
+      font-size:12px;
+      font-weight:800;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid rgba(14,165,233,.35);
+      background:rgba(14,165,233,.08);
+      color:#0672a8;
+    }
+
+    model-viewer{
+      width:100%;
+      height: calc(100% - 56px); /* fill remaining height under header */
+      background:#fff;
+    }
+
+    /* Right panel (this scrolls) */
+    .panel{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:18px 18px 8px;
+
+      height:100%;
+      overflow-y:auto; /* IMPORTANT: only right panel scrolls */
+    }
+.add-btn{
+      width:100%;
+      padding:16px;
+      background:#1f4e93;
+      color:white;
+      border:none;
+      font-size:14px;
+      font-weight:900;
+      border-radius:12px;
+      cursor:pointer;
+      transition:.2s;
+    }
+
+    .add-btn:hover{
+      background:#123467;
+}
+.shipping{
+      text-align:center;
+      font-size:12px;
+      color:var(--muted);
+      margin-top:8px;
+    }
+    .brandline{
+      font-size:12px;
+      color:var(--muted);
+      letter-spacing:.1em;
+      text-transform:uppercase;
+    }
+    .product-title{
+      margin:8px 0 6px;
+      font-size:28px;
+      font-weight:900;
+      letter-spacing:-.02em;
+    }
+    .price{
+      font-size:16px;
+      font-weight:900;
+      color:#0672a8;
+      margin-bottom:12px;
+    }
+    .divider{ height:1px; background:var(--border); margin:14px 0; }
+
+    .section{
+      padding:14px 0;
+      border-top:1px solid var(--border);
+    }
+    .section:first-of-type{ border-top:0; padding-top:6px; }
+    .section h3{
+      margin:0 0 10px;
+      font-size:12px;
+      font-weight:900;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+    }
+
+    .preset-card{
+      border:1px solid var(--border);
+      border-radius:12px;
+      padding:12px;
+      background:#fff;
+      margin:10px 0;
+    }
+    .preset-title{
+      font-size:12px;
+      font-weight:900;
+      letter-spacing:.10em;
+      text-transform:uppercase;
+      margin:0 0 8px 0;
+      color:var(--text);
+    }
+    .preset-sub{
+      font-size:12px;
+      color:var(--muted);
+      margin:0 0 10px 0;
+    }
+
+    .rowlabel{
+      font-size:12px;
+      color:var(--muted);
+      margin:10px 0 6px;
+    }
+    .btnrow{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+    }
+    .btnrow button{
+      appearance:none;
+      -webkit-appearance:none;
+      background:#fff;
+      border:1px solid #cbd5e1;
+      color:var(--text);
+      padding:10px 12px;
+      font-size:12px;
+      font-weight:800;
+      border-radius:10px;
+      cursor:pointer;
+      letter-spacing:.06em;
+      text-transform:uppercase;
+      transition:.15s;
+    }
+    .btnrow button:hover{
+      border-color: rgba(14,165,233,.7);
+      box-shadow: 0 6px 16px rgba(14,165,233,.14);
+    }
+    .btnrow button:active{ transform: translateY(1px); }
+
+    @media (max-width:980px){
+      body{ overflow:auto; height:auto; }
+      .app{ height:auto; }
+      .page{ grid-template-columns:1fr; height:auto; overflow:visible; }
+      .viewer-wrap{ position:relative; height:auto; }
+      model-viewer{ height:520px; }
+      .panel{ height:auto; overflow:visible; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="topbar">
+    <img alt="NHG Health" src="NHG_Health_Logo_since_July_1,_2025.png">
+  </div>
+
+  <div class="app">
+    <div class="page">
+      <div class="viewer-wrap">
+        <div class="viewer-head">
+          <div class="viewer-title">3D Preview</div>
+          <div class="badge">Hospital Edition</div>
+        </div>
+
+        <model-viewer
+          src="Animations &amp; Materials Working File DVE.glb"
+          ar ar-modes="webxr scene-viewer quick-look"
+          camera-controls tone-mapping="neutral"
+          poster="poster.png"
+          shadow-intensity="1"
+          animation-name="ArmatureAction"
+          camera-orbit="411.5deg 79.3deg 0.4008m"
+          field-of-view="30deg"
+          id="gear"
+        >
+          <button class="Hotspot" slot="hotspot-3" data-surface="5 0 556 474 475 0.354 0.477 0.168" data-visibility-attribute="visible" onMouseOver="addhotspot1()" onMouseOut="removehotspot1()">
+            <div class="HotspotAnnotation" id="hotspot1" style="visibility:hidden">Protective Case</div>
+          </button>
+
+          <button class="Hotspot" slot="hotspot-4" data-surface="1 0 774 775 776 0.020 0.326 0.654" data-visibility-attribute="visible" onMouseOver="addhotspot2()" onMouseOut="removehotspot2()">
+            <div class="HotspotAnnotation" id="hotspot2" style="visibility:hidden">Shock-Absorbing Bumper</div>
+          </button>
+
+          <button class="Hotspot" slot="hotspot-5" data-surface="0 0 1270 1267 1279 0.059 0.623 0.318" data-visibility-attribute="visible" onMouseOver="addhotspot3()" onMouseOut="removehotspot3()">
+            <div class="HotspotAnnotation" id="hotspot3" style="visibility:hidden">Sealing Gasket</div>
+          </button>
+
+          <button class="Hotspot" slot="hotspot-6" data-surface="7 0 742 427 394 0.410 0.249 0.340" data-visibility-attribute="visible" onMouseOver="addhotspot4()" onMouseOut="removehotspot4()">
+            <div class="HotspotAnnotation" id="hotspot4" style="visibility:hidden">Universal Clip</div>
+          </button>
+
+          <button class="Hotspot" slot="hotspot-7" data-surface="5 0 2825 2826 2874 0.337 0.171 0.493" data-visibility-attribute="visible" onMouseOver="addhotspot5()" onMouseOut="removehotspot5()">
+            <div class="HotspotAnnotation" id="hotspot5" style="visibility:hidden">Built-In Hinge</div>
+          </button>
+
+          <div class="progress-bar hide" slot="progress-bar"><div class="update-bar"></div></div>
+          <button slot="ar-button" id="ar-button">View in your space</button>
+          <div id="ar-prompt"><img src="ar_hand_prompt.png" alt=""></div>
+        </model-viewer>
+      </div>
+
+      <aside class="panel">
+        <div class="brandline">NHG</div>
+<div class="product-title">BubbleGuard</div>
+<div class="subtitle">for Telemetry Devices</div>
+<div class="price">USD$250</div>
+
+        <div class="divider"></div>
+
+        <div class="section">
+          <h3>Preset Sets</h3>
+
+          <div class="preset-card">
+            <div class="preset-title">NHG Signature</div>
+            <div class="preset-sub">Click both buttons</div>
+            <div class="rowlabel">Case</div>
+            <div class="btnrow"><button onClick="C2()">Blue</button></div>
+            <div class="rowlabel">Gasket &amp; Bumpers</div>
+            <div class="btnrow"><button onClick="G1()">White</button></div>
+          </div>
+
+          <div class="preset-card">
+            <div class="preset-title">Clinical Mist</div>
+            <div class="preset-sub">Click both buttons</div>
+            <div class="rowlabel">Case</div>
+            <div class="btnrow"><button onClick="C1()">Grey</button></div>
+            <div class="rowlabel">Gasket &amp; Bumpers</div>
+            <div class="btnrow"><button onClick="G2()">Blue</button></div>
+          </div>
+
+          <div class="preset-card">
+            <div class="preset-title">Healing Teal</div>
+            <div class="preset-sub">Click all 3 buttons</div>
+            <div class="rowlabel">Case</div>
+            <div class="btnrow"><button onClick="C3()">Teal</button></div>
+            <div class="rowlabel">Gasket &amp; Bumpers</div>
+            <div class="btnrow"><button onClick="G3()">Cyan</button></div>
+            <div class="rowlabel">Clip</div>
+            <div class="btnrow"><button onClick="Clip()">Deep Teal</button></div>
+          </div>
+        </div>
+
+        <div class="section">
+          <h3>Position</h3>
+          <div class="btnrow">
+            <button onClick="PBtn01('74.29deg 89.05deg 0.4008m')">Front</button>
+            <button onClick="PBtn02('3.122deg 86.55deg 0.4008m')">Left</button>
+            <button onClick="PBtn03('-416.23deg 91.14deg 0.4008m')">Back</button>
+            <button onClick="PBtn04('186.7deg 84.47deg 0.4008m')">Right</button>
+            <button onClick="PBtn05('-269.9deg 7.075deg 0.3366m')">Top</button>
+          </div>
+        </div>
+
+        <div class="section">
+          <h3>Customise Your Own</h3>
+
+          <div class="rowlabel">Case</div>
+          <div class="btnrow">
+            <button onClick="C1()">Grey</button>
+            <button onClick="C2()">Blue</button>
+            <button onClick="C3()">Teal</button>
+          </div>
+
+          <div class="rowlabel">Gasket &amp; Bumpers</div>
+          <div class="btnrow">
+            <button onClick="G1()">White</button>
+            <button onClick="G2()">Blue</button>
+            <button onClick="G3()">Cyan</button>
+          </div>
+
+          <div class="rowlabel">Clip</div>
+          <div class="btnrow">
+            <button onClick="Clip()">Deep Teal</button>
+          </div>
+        </div>
+
+        <div class="section">
+          <h3>Animation</h3>
+          <div class="btnrow">
+            <button id="default1Btn" onClick="Btn01()">Seal &amp; Lock</button>
+            <button id="default2Btn" onClick="Btn02()">Open Enclosure</button>
+            <button id="default3Btn" onClick="Btn03()">Exploded Assembly</button>
+            <button id="pauseBtn" onClick="pauseAnimation()">Pause Animation</button>
+          </div>
+        </div>
+
+<div class="purchase">
+<button class="add-btn">Add to Bag</button>
+<div class="shipping">Free Shipping Worldwide</div>
+</div>
+
+      </aside>
+    </div>
+  </div>
+
+  <!-- Your original JS (unchanged) -->
+  <script>
+    function addhotspot1(){ document.getElementById("hotspot1").style.visibility="visible" }
+    function removehotspot1(){ document.getElementById("hotspot1").style.visibility="hidden"; }
+
+    function addhotspot2(){ document.getElementById("hotspot2").style.visibility="visible" }
+    function removehotspot2(){ document.getElementById("hotspot2").style.visibility="hidden"; }
+
+    function addhotspot3(){ document.getElementById("hotspot3").style.visibility="visible" }
+    function removehotspot3(){ document.getElementById("hotspot3").style.visibility="hidden"; }
+
+    function addhotspot4(){ document.getElementById("hotspot4").style.visibility="visible" }
+    function removehotspot4(){ document.getElementById("hotspot4").style.visibility="hidden"; }
+
+    function addhotspot5(){ document.getElementById("hotspot5").style.visibility="visible" }
+    function removehotspot5(){ document.getElementById("hotspot5").style.visibility="hidden"; }
+
+    function PBtn01(orbit){ document.getElementById('gear').cameraOrbit = orbit; }
+    function PBtn02(orbit){ document.getElementById('gear').cameraOrbit = orbit; }
+    function PBtn03(orbit){ document.getElementById('gear').cameraOrbit = orbit; }
+    function PBtn04(orbit){ document.getElementById('gear').cameraOrbit = orbit; }
+    function PBtn05(orbit){ document.getElementById('gear').cameraOrbit = orbit; }
+
+    function C1() { document.getElementById('gear').variantName = "Clinical Mist Light Grey "; }
+    function C2() { document.getElementById('gear').variantName = "NHG Signature Blue"; }
+    function C3() { document.getElementById('gear').variantName = "Healing Teal Teal"; }
+
+    function G1() { document.getElementById('gear').variantName = "NHG Signature White"; }
+    function G2() { document.getElementById('gear').variantName = "Clinical Mist Healthcare Blue"; }
+    function G3() { document.getElementById('gear').variantName = "Healing Teal Light Cyan"; }
+
+    function Clip() { document.getElementById('gear').variantName = "Healing Teal Deep Teal"; }
+
+    function Btn01(){
+      document.getElementById('gear').pause();
+      document.getElementById('gear').animationName = "ArmatureAction";
+      document.getElementById('gear').play();
+    }
+    function Btn02(){
+      document.getElementById('gear').pause();
+      document.getElementById('gear').animationName = "ArmatureAction.001";
+      document.getElementById('gear').play();
+    }
+    function Btn03(){
+      document.getElementById('gear').pause();
+      document.getElementById('gear').animationName = "ArmatureAction.002";
+      document.getElementById('gear').play();
+    }
+    function pauseAnimation(){ document.getElementById('gear').pause(); }
+  </script>
+
+  <!-- Loads <model-viewer> for browsers -->
+  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
+</body>
+</html>
