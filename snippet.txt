@@ -1,0 +1,24 @@
+<model-viewer src="Animations &amp; Materials Working File DVE.glb" ar ar-modes="webxr scene-viewer quick-look" camera-controls tone-mapping="neutral" poster="poster.png" shadow-intensity="1" animation-name="ArmatureAction" camera-orbit="411.5deg 79.3deg 0.4008m" field-of-view="30deg">
+    <button class="Hotspot" slot="hotspot-3" data-surface="5 0 556 474 475 0.354 0.477 0.168" data-visibility-attribute="visible">
+        <div class="HotspotAnnotation">Protective Outer Case</div>
+    </button><button class="Hotspot" slot="hotspot-4" data-surface="1 0 774 775 776 0.020 0.326 0.654" data-visibility-attribute="visible">
+        <div class="HotspotAnnotation">Shock-Absorbing Bumper</div>
+    </button><button class="Hotspot" slot="hotspot-5" data-surface="0 0 1270 1267 1279 0.059 0.623 0.318" data-visibility-attribute="visible">
+        <div class="HotspotAnnotation">Sealing Gasket</div>
+    </button><button class="Hotspot" slot="hotspot-6" data-surface="7 0 742 427 394 0.410 0.249 0.340" data-visibility-attribute="visible">
+        <div class="HotspotAnnotation">Secure Attachment Clip</div>
+    </button><button class="Hotspot" slot="hotspot-7" data-surface="5 0 2825 2826 2874 0.337 0.171 0.493" data-visibility-attribute="visible">
+        <div class="HotspotAnnotation">Built-In Hinge</div>
+    </button><button class="Hotspot" slot="hotspot-8" data-surface="5 0 8924 9056 8922 0.064 0.028 0.909" data-visibility-attribute="visible">
+        <div class="HotspotAnnotation">Snap-Lock Closure</div>
+    </button>
+    <div class="progress-bar hide" slot="progress-bar">
+        <div class="update-bar"></div>
+    </div>
+    <button slot="ar-button" id="ar-button">
+        View in your space
+    </button>
+    <div id="ar-prompt">
+        <img src="https://modelviewer.dev/shared-assets/icons/hand.png">
+    </div>
+</model-viewer>
